@@ -1,12 +1,14 @@
-FROM python:3.10-slim as build-image
+FROM python:3.11-slim as build-image
 
 WORKDIR /usr/local/bin/deployment
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y curl ca-certificates gnupg
-RUN curl https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-
-RUN apt-get install -y gcc g++ make postgresql-server-dev-all libpq-dev libffi-dev git cargo
+RUN apt update && \
+    apt install -y curl ca-certificates software-properties-common apt-transport-https wget gnupg && \
+    wget -O- https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /usr/share/keyrings/postgresql.gpg && \
+    echo deb [arch=amd64,arm64,ppc64el signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main | tee /etc/apt/sources.list.d/postgresql.list && \
+    apt remove wget curl && \
+    apt update && \
+    apt install -y libpq-dev
 
 COPY ./ /tmp/build
 COPY src/python3_project_template/db/migrations ./migrations/
@@ -29,14 +31,18 @@ RUN  export APP_HOME=/usr/local/bin/deployment \
          && python3 -m pip install -U python3_project_template --find-links=/tmp/build/dist)
 
 
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 ENV  PYTHONPATH=/usr/local/bin/deployment
 
-RUN  mkdir -p /usr/local/bin/deployment \
-     && apt-get update \
-     && apt-get -y upgrade \
-     && apt-get install -y libpq-dev
+RUN  mkdir -p /usr/local/bin/deployment && \
+     apt update && \
+     apt install -y curl ca-certificates software-properties-common apt-transport-https wget gnupg && \
+     wget -O- https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor | tee /usr/share/keyrings/postgresql.gpg && \
+     echo deb [arch=amd64,arm64,ppc64el signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt/ bullseye-pgdg main | tee /etc/apt/sources.list.d/postgresql.list && \
+     apt remove wget curl && \
+     apt update && \
+     apt install -y libpq-dev
 
 WORKDIR /usr/local/bin/deployment
 
