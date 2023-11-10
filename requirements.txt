@@ -1,1 +1,2 @@
-pydantic==1.10.12
+pydantic==2.4.2
+pydantic_settings==2.0.3

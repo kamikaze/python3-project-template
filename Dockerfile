@@ -1,4 +1,4 @@
-FROM python:3.11.4-slim-bookworm as build-image
+FROM python:3.12-slim-bookworm as build-image
 
 WORKDIR /usr/local/bin/deployment
 
@@ -31,7 +31,7 @@ RUN  export APP_HOME=/usr/local/bin/deployment \
          && python3 -m pip install -U python3_project_template --find-links=/tmp/build/dist)
 
 
-FROM python:3.11.4-slim-bookworm
+FROM python:3.12-slim-bookworm
 
 ENV  PYTHONPATH=/usr/local/bin/deployment
 
