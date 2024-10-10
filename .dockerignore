@@ -1,2 +1,12 @@
-venv
-docs
+*
+
+# Allow files and directories
+!/.git
+!/migrations
+!/lib
+!/src
+!alembic.ini
+!requirements.txt
+!requirements_dev.txt
+!setup.cfg
+!setup.py
