@@ -1,17 +1,16 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel", "pyscaffold>=3.2a0,<3.3a0"]
+requires = ["setuptools>=78.0", "setuptools_rust", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "python3-template-project"
-version = "0.0.1"
+version = "0.1.0"
 description = "Python3 template project"
 authors = [
     {name = "Oleg Korsak", email = "kamikaze.is.waiting.you@gmail.com"}
 ]
-license = {text = "GPL-3"}
+license = "GPL-3.0"
 readme = {file = "README.rst", content-type = "text/x-rst"}
-homepage = "https://github.com/kamikaze/python3-project-template"
 requires-python = ">=3.13"
 keywords = ["template", "example", "project"]
 classifiers = [
@@ -20,12 +19,13 @@ classifiers = [
 ]
 
 dependencies = [
-    "pydantic==2.9.2",
-    "pydantic_settings==2.6.1"
+    "pydantic==2.11.0",
+    "pydantic_settings==2.8.1"
 ]
 
 [project.urls]
 Documentation = "https://github.com/kamikaze/python3-project-template/wiki"
+Homepage = "https://github.com/kamikaze/python3-project-template"
 
 [project.optional-dependencies]
 testing = [
@@ -38,14 +38,22 @@ testing = [
 # fibonacci = "python3_project_template.skeleton:run"
 
 [tool.setuptools]
-packages = {find = {where = ["src"], exclude = ["tests"]}}
 include-package-data = true
+zip-safe = false
 
 [tool.setuptools.packages.find]
 where = ["src"]
+exclude = ["tests"]
 
-[tool.setuptools.zip-safe]
-zip-safe = false
+[tool.setuptools.package-data]
+python3_project_template = [
+    "rustlib/Cargo.toml",
+    "rustlib/lib.rs",
+    "clib/extmod.c",
+    "*.rst",
+    "*.txt",
+    "*.md"
+]
 
 [tool.pytest.ini_options]
 addopts = "--cov python3_project_template --cov-report term-missing --verbose"
@@ -54,10 +62,6 @@ testpaths = ["tests"]
 
 [tool.flake8]
 exclude = [".tox", "build", "dist", ".eggs", "docs/conf.py"]
-
-[tool.pyscaffold]
-version = "3.2.3"
-package = "python3_project_template"
 
 [tool.bdist_wheel]
 universal = true
