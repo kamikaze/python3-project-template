@@ -6,7 +6,7 @@
 !/lib
 !/src
 !alembic.ini
-!requirements.txt
-!requirements_dev.txt
-!setup.cfg
+!MANIFEST.in
+!pyproject.toml
 !setup.py
+!uv.lock
