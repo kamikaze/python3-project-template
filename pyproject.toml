@@ -4,6 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python3-template-project"
+version = "0.1.0"
 description = "Python3 template project"
 authors = [
     { name = "Oleg Korsak", email = "kamikaze.is.waiting.you@gmail.com" }
@@ -16,7 +17,7 @@ classifiers = [
     "Programming Language :: Python",
 ]
 requires-python = "==3.14.0"
-dynamic = ["version"]
+#dynamic = ["version"]
 dependencies = [
     "pydantic==2.12.3",
     "pydantic-settings==2.11.0",
@@ -52,6 +53,10 @@ testing = [
 zip-safe = false
 package-dir = { "" = "src" }
 include-package-data = true
+
+[tool.setuptools_scm]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
 
 [tool.setuptools.packages.find]
 where = ["src"]
