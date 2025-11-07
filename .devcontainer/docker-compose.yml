@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB:-python3-project-template}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-dev}"
+      POSTGRES_USER: "${POSTGRES_USER:-dev}"
+    restart: unless-stopped
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+volumes:
+  postgres-data:
