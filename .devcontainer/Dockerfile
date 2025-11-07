@@ -11,5 +11,6 @@ RUN apt update && \
     echo deb [arch=amd64,arm64,ppc64el signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt/ trixie-pgdg main | tee /etc/apt/sources.list.d/postgresql.list && \
     apt update && \
     apt install -y --no-install-recommends libpq-dev gcc g++ make postgresql-server-dev-18 libffi-dev git cargo pkg-config ssh && \
+    curl https://sh.rustup.rs -sSf | bash -s -- -y && \
     apt clean && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/
