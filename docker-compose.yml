@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:18-alpine
+    image: postgres:18.1-alpine
     container_name: python3-template-project-db
     ports:
       - "5432:5432"
@@ -27,7 +27,7 @@ services:
   python3-template-service:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Containerfile
     image: python3-template-service
     container_name: python3-template-project-service
     ports:
