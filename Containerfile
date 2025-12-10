@@ -1,5 +1,5 @@
 ARG BASE_REGISTRY=docker.io/library
-FROM ${BASE_REGISTRY}/python:3.14.0-slim-trixie AS build-image
+FROM ${BASE_REGISTRY}/python:3.14.2-slim-trixie AS build-image
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -41,7 +41,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 RUN uvx pip wheel --wheel-dir /build/wheels .
 
 
-FROM ${BASE_REGISTRY}/python:3.14.0-slim-trixie AS app
+FROM ${BASE_REGISTRY}/python:3.14.2-slim-trixie AS app
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -71,8 +71,5 @@ RUN python3 -m pip install --no-cache /wheels/* && \
 USER  appuser
 COPY --chown=appuser src/python3_project_template ./python3_project_template/
 
-EXPOSE 8080
 
-
-CMD ["python3", "-m", "uvicorn", "python3_project_template.api.http:app", \
-     "--host", "0.0.0.0", "--port", "8080"]
+CMD ["python3", "-m", "python3_project_template"]
