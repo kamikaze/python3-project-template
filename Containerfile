@@ -12,10 +12,10 @@ RUN if [ -z "$ARCH" ]; then ARCH="$(uname -m)"; fi && \
     apt update && \
     apt upgrade -y && \
     apt install -y curl ca-certificates gnupg2 && \
-    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg && \
-    echo "deb https://apt.postgresql.org/pub/repos/apt trixie-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
+    curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql.gpg && \
+    echo deb [arch=amd64,arm64,ppc64el signed-by=/usr/share/keyrings/postgresql.gpg] http://apt.postgresql.org/pub/repos/apt/ trixie-pgdg main | tee /etc/apt/sources.list.d/postgresql.list && \
     apt update && \
-    apt install -y --no-install-recommends gcc g++ make postgresql-server-dev-18 libpq-dev libpq5 libffi-dev git cargo pkg-config nfs-common && \
+    apt install -y --no-install-recommends gcc g++ make postgresql-server-dev-18 libpq-dev libpq5 libffi-dev git pkg-config nfs-common && \
     curl https://sh.rustup.rs -sSf | bash -s -- -y && \
     mkdir -p /usr/lib/linux-gnu && \
     cp /usr/lib/${ARCH}-linux-gnu/libpq.so.* \
